@@ -26,15 +26,25 @@ namespace TheBrainTest1_0
         /// <param name="maxFiringTime">Max </param>
         Network(int numInput, int numOutput, int numInner, int avgConnections, int maxFiringTime)
         {
-            createInnerNodes(numInner, avgConnections);
-            createInputNodes(numInput);
-            createOutputNodes(numOutput);
+            createInnerNodes(numInner, avgConnections, maxFiringTime);
+            createInputNodes(numInput, avgConnections, maxFiringTime);
+            createOutputNodes(numOutput, avgConnections, maxFiringTime);
         }
 
-        private void createInnerNodes(int numInner, int avgConnections)
+        private void createInnerNodes(int numInner, int avgConnections, int maxFiringTime)
         {
-            inputNodes = new Node[numInner];
-
+            innerNodes = NodeFactory.makeNodes(numInner, avgConnections, maxFiringTime);
         }
+
+        private void createInputNodes(int numInput, int avgConnections, int maxFiringTime)
+        {
+            inputNodes = NodeFactory.makeInputNodes(numInput, avgConnections, maxFiringTime, innerNodes);
+        }
+
+        private void createOutputNodes(int numOuter, int avgConnections, int maxFiringTime)
+        {
+            outputNodes = NodeFactory.makeOutputNodes(numOuter, avgConnections, maxFiringTime, innerNodes);
+        }
+
     }
 }
